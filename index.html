@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Склад игрушек</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Мой склад игрушек</h1>
+
+      <div class="summary">
+        <p>Всего товаров: <span id="summary-total-count">0</span> шт.</p>
+        <p>Общая стоимость: <span id="summary-total-price">0</span> руб.</p>
+        <p>Заканчивается (менее 5 шт.): <span id="summary-low-stock">0</span></p>
+      </div>
+    </header>
+
+    <main>
+      <section class="add-item-form">
+        <h2>Добавить новый товар</h2>
+
+        <form id="addItemForm">
+          <div>
+            <label for="itemName">Название:</label>
+            <input type="text" id="itemName" required />
+          </div>
+
+          <div>
+            <label for="itemSku">Артикул:</label>
+            <input type="text" id="itemSku" />
+          </div>
+
+          <div>
+            <label for="itemManufacturer">Производитель:</label>
+            <input type="text" id="itemManufacturer" />
+          </div>
+
+          <div>
+            <label for="itemPrice">Цена (руб.):</label>
+            <input type="number" id="itemPrice" required />
+          </div>
+
+          <div>
+            <label for="itemQuantity">Количество:</label>
+            <input type="number" id="itemQuantity" required />
+          </div>
+
+          <div>
+            <label for="itemImage">Фото (ссылка):</label>
+            <input type="text" id="itemImage" placeholder="https://... или data:image/..." />
+          </div>
+
+          <button type="submit">Добавить товар</button>
+        </form>
+      </section>
+
+      <section class="item-list">
+        <h2>Список товаров</h2>
+
+        <div class="controls-panel">
+          <input type="text" id="searchInput" placeholder="Поиск по названию..." />
+
+          <select id="sortSelect">
+            <option value="default">Сортировка: по умолчанию</option>
+            <option value="name-asc">Название (А-Я)</option>
+            <option value="name-desc">Название (Я-А)</option>
+            <option value="price-asc">Цена (сначала дешевые)</option>
+            <option value="price-desc">Цена (сначала дорогие)</option>
+            <option value="quantity-asc">Количество (по возрастанию)</option>
+            <option value="quantity-desc">Количество (по убыванию)</option>
+          </select>
+
+          <button id="btnShowLowStock">Показать (менее 5 шт.)</button>
+
+          <button id="btnToggleWaybillMode">Создать накладную</button>
+        </div>
+        <div class="items-grid"></div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="waybillModalBackdrop">
+      <div class="modal-content">
+        <h2>Новая накладная</h2>
+
+        <div id="waybillItemsList"></div>
+
+        <div class="waybill-total">
+          <strong>Итого:</strong>
+          <strong id="waybillTotalPrice">0 руб.</strong>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelWaybill">Закрыть</button>
+          <button type="button" id="btnClearWaybill">Очистить</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <div class="modal-backdrop" id="editModalBackdrop">
+      <div class="modal-content">
+        <h2>Редактировать товар</h2>
+
+        <form id="editItemForm">
+          <input type="hidden" id="editItemId" />
+
+          <div>
+            <label for="editItemName">Название:</label>
+            <input type="text" id="editItemName" required />
+          </div>
+          <div>
+            <label for="editItemSku">Артикул:</label>
+            <input type="text" id="editItemSku" />
+          </div>
+          <div>
+            <label for="editItemManufacturer">Производитель:</label>
+            <input type="text" id="editItemManufacturer" />
+          </div>
+          <div>
+            <label for="editItemPrice">Цена (руб.):</label>
+            <input type="number" id="editItemPrice" required />
+          </div>
+          <div>
+            <label for="editItemQuantity">Количество:</label>
+            <input type="number" id="editItemQuantity" required />
+          </div>
+          <div>
+            <label for="editItemImage">Фото (ссылка):</label>
+            <input type="text" id="editItemImage" />
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="btnCancelEdit">Отмена</button>
+            <button type="submit">Сохранить изменения</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
