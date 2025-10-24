@@ -1,0 +1,541 @@
+/* Это CSS-комментарий. Он пишется по-другому, не как в HTML.
+   Здесь мы будем писать наши "правила" для дизайна.
+*/
+
+/* Правило 1: Стили для всей страницы
+   Мы "выбираем" тег <body> (это называется 'селектор')
+   и задаем ему свойства внутри фигурных скобок {}.
+*/
+body {
+    background-color: #f7f9fc; /* Очень светло-серый (почти белый) фон */
+    font-family: Arial, sans-serif; /* Задаем стандартный шрифт без засечек */
+    color: #333; /* Цвет текста по умолчанию (темно-серый, а не чисто черный) */
+    margin: 0; /* Убираем отступы по умолчанию у страницы */
+    padding: 0; /* Убираем поля по умолчанию у страницы */
+}
+
+/* Правило 2: Стили для главного заголовка */
+h1 {
+    color: #2c3e50; /* Задаем другой цвет для заголовка h1 */
+    text-align: center; /* Выравниваем его по центру */
+}
+
+/* Правило 3: Стили для всех заголовков h2
+   (У нас их два: "Добавить новый товар" и "Список товаров")
+*/
+h2 {
+    color: #34495e; /* Тоже темный, но чуть светлее h1 */
+    border-bottom: 2px solid #e1eaed; /* Добавляем тонкую серую линию-подчеркивание */
+    padding-bottom: 5px; /* Немного отступа между текстом h2 и линией */
+}
+
+/*
+ * Стили для формы добавления товара
+ */
+
+/* Стилизуем "обертку" всей нашей формы.
+   Мы обращаемся к ней по имени класса .add-item-form,
+   которое мы задали в HTML-теге <section>
+*/
+.add-item-form {
+    background-color: #ffffff; /* Чисто белый фон для контраста */
+    border-radius: 12px; /* Вот они! Скругленные края */
+    padding: 24px; /* Внутренние отступы, чтобы контент не "лип" к краям */
+    margin: 20px; /* Внешние отступы, чтобы сама форма не "липла" к h2 */
+    box-shadow: 0 4px 12px rgba(86, 106, 216, 0.3); /* Легкая тень для "объема" */
+}
+
+/* Стилизуем сам "бланк" <form> */
+#addItemForm {
+    /* Магия CSS Grid!
+       Мы говорим форме: "разбей свое содержимое на 2 колонки".
+       1fr - "одна доля свободного места" (для <label>)
+       2fr - "две доли свободного места" (для <input>, делаем его шире)
+    */
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px; /* Расстояние (промежуток) между ячейками сетки */
+}
+
+/* Стилизуем все <label> и <button> внутри нашей формы.
+   Селектор #addItemForm div говорит: "выбери все <div>,
+   которые лежат внутри элемента с id=addItemForm"
+*/
+#addItemForm div {
+    /* По умолчанию наши <div> (в которых лежат <label> и <input>)
+       уже хорошо встали в сетку. Но мы сделаем их "умными",
+       чтобы label и input внутри них тоже красиво выстроились.
+    */
+    display: contents; /* Это сложное свойство, но оно помогает grid-сетке "видеть"
+                           элементы внутри <div> так, как будто <div> и нет. */
+}
+
+/* Стилизуем все "подписи" к полям */
+#addItemForm label {
+    font-weight: bold; /* Делаем текст жирным */
+    color: #555; /* Чуть приглушенный цвет текста */
+    padding-top: 8px; /* Небольшой отступ сверху, чтобы выровнять по центру поля */
+    text-align: right; /* Выравниваем по правому краю */
+    padding-right: 10px; /* Отступ справа, чтобы не "липло" к полю ввода */
+}
+
+/* Стилизуем все "поля для ввода" */
+#addItemForm input {
+    width: 100%; /* Занимать всю ширину "колонки", которую мы ему выделили (2fr) */
+    padding: 10px 12px; /* Внутренние отступы (вертикальный и горизонтальный) */
+    border: 1px solid #ddd; /* Тонкая серая рамка */
+    border-radius: 8px; /* Снова скругленные края! */
+    box-sizing: border-box; /* Важное свойство: отступы и рамки не увеличивают общую ширину */
+}
+
+/* Стилизуем нашу "кнопку" */
+#addItemForm button {
+    /* Магия для кнопки! Мы хотим, чтобы она заняла ОБЕ колонки.
+       grid-column: 1 / -1; говорит: "Начинайся с 1-й колонки и тянись до последней (-1)"
+    */
+    grid-column: 1 / -1;
+
+    padding: 12px 20px;
+    font-size: 16px; /* Делаем шрифт чуть побольше */
+    font-weight: bold; /* И жирным */
+    color: #ffffff; /* Белый цвет текста */
+
+    /* Вот он! Твой акцентный градиент.
+       Мы выбрали пастельные тона (от светло-голубого к светло-сиреневому)
+    */
+    background-image: linear-gradient(to right, #f96c71, #72d3ff);
+
+    border: none; /* Убираем стандартную некрасивую рамку */
+    border-radius: 8px; /* И тут скругляем! */
+    cursor: pointer; /* Делаем так, чтобы курсор становился "рукой" при наведении */
+
+    /* А вот и "ненавязчивая анимация"!
+       transition: all 0.3s ease;
+       Говорит браузеру: "Если у этой кнопки что-то изменится
+       (например, фон при наведении), сделай переход плавным (за 0.3 секунды)"
+    */
+    transition: all 0.3s ease;
+}
+
+/* А это - та самая анимация!
+   :hover - это "псевдо-класс", который срабатывает,
+   когда мы наводим мышку на элемент.
+*/
+#addItemForm button:hover {
+    /* При наведении делаем градиент чуть ярче */
+    background-image: linear-gradient(to right, #8ab5f9, #aedef8);
+    /* И добавляем легкую тень, чтобы кнопка "приподнялась" */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * ===============================================================
+ * ШАГ 12: СТИЛИ ДЛЯ СПИСКА ТОВАРОВ И КАРТОЧЕК
+ * ===============================================================
+ */
+
+/* Наша "коробка" для карточек */
+.items-grid {
+    display: grid; /* Включаем "сетку" */
+
+    /* Магия адаптивности:
+       Говорим сетке: "Создавай колонки, которые минимум 280px шириной.
+       Заполняй ими все доступное пространство (auto-fill).
+       '1fr' значит, что все колонки будут одинаковой ширины."
+    */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+    gap: 24px; /* Пробелы между карточками */
+    padding: 20px; /* Отступы для всей сетки */
+}
+
+/* Стили для самой карточки */
+.item-card {
+    background-color: #ffffff; /* Белый фон */
+    border-radius: 12px; /* Наши любимые скругленные углы */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Легкая тень */
+    display: flex; /* Включаем "умный" режим выравнивания */
+    flex-direction: column; /* Все "дети" карточки встанут друг под другом */
+    overflow: hidden; /* Обрезаем все, что вылезает за скругленные углы (важно для фото) */
+    transition: all 0.3s ease; /* Плавная анимация */
+}
+
+.item-card:hover {
+    /* "Приподнимаем" карточку при наведении */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px); /* Сдвигаем чуть-чуть вверх */
+}
+
+/* Контейнер для фото (для 1:1) */
+.item-card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Та самая магия: 1:1 соотношение сторон */
+    background-color: #f0f0f0; /* Заглушка, если фото не загрузится */
+}
+
+/* Сама картинка */
+.item-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Важнейшее свойство: фото заполнит контейнер,
+                           сохраняя пропорции (и обрежется, если нужно) */
+}
+
+/* Контейнер с текстом */
+.item-card-info {
+    padding: 16px;
+    flex-grow: 1; /* "Растягиваем" этот блок, чтобы он занял все место
+                      (так кнопки всегда будут прижаты к низу) */
+}
+
+.item-card-info h3 {
+    margin: 0 0 8px 0; /* Название (убираем отступ сверху) */
+    color: #2c3e50;
+}
+
+.item-card-info .sku {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 12px;
+}
+
+/* Блок "Цена и Количество" */
+.price-quantity {
+    display: flex; /* Ставим в ряд */
+    justify-content: space-between; /* "Цена" - слева, "Кол-во" - справа */
+    align-items: center; /* Выравниваем по центру */
+    margin-top: 12px;
+}
+
+.price-quantity .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.price-quantity .quantity {
+    font-size: 14px;
+    color: #555;
+    background-color: #ecf0f1;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Контейнер для кнопок */
+.item-card-actions {
+    display: flex;
+    gap: 8px; /* Пробел между кнопками */
+    padding: 0 16px 16px 16px; /* Отступы (сверху 0, т.к. уже есть у .item-card-info) */
+}
+
+/* Общий стиль для кнопок в карточке */
+.item-card-actions button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Кнопка "Редактировать" (пастельный градиент) */
+.item-card-actions .btn-edit {
+    background-image: linear-gradient(to right, #e0c3fc, #8ec5fc);
+    color: white;
+}
+.item-card-actions .btn-edit:hover {
+    opacity: 0.85; /* Чуть тусклее при наведении */
+}
+
+/* Кнопка "Удалить" (простая, но стильная) */
+.item-card-actions .btn-delete {
+    background-color: #fde2e2; /* Пастельный красный */
+    color: #c0392b; /* Темно-красный текст */
+}
+.item-card-actions .btn-delete:hover {
+    background-color: #f9caca;
+}
+
+/*
+ * ===============================================================
+ * ШАГ 16: СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА
+ * ===============================================================
+ */
+
+/* "Подложка" (фон) */
+.modal-backdrop {
+    position: fixed; /* "Прибиваем" к экрану */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный */
+
+    /* Ставим по центру (используя flex) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Прячем по умолчанию */
+    visibility: hidden;
+    opacity: 0;
+
+    /* Плавная анимация появления */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 100; /* Поверх всего */
+}
+
+/* Класс ".visible" (который мы добавим через JS),
+   чтобы ПОКАЗАТЬ окно */
+.modal-backdrop.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Само "окно" (белая карточка) */
+.modal-content {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%; /* На мобильных - 90% ширины */
+    max-width: 500px; /* Но не больше 500px */
+
+    /* Анимация "выплывания" */
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+}
+
+/* Когда окно "видно", оно "выезжает" на место */
+.modal-backdrop.visible .modal-content {
+    transform: translateY(0);
+}
+
+/* Стилизуем форму ВНУТРИ окна */
+#editItemForm {
+    /* (Она похожа на 'addItemForm', но чуть проще) */
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 2 колонки: label + input */
+    gap: 16px;
+}
+
+#editItemForm div {
+    display: contents; /* (Тот же трюк с 'grid', что и раньше) */
+}
+
+#editItemForm label {
+    font-weight: bold;
+    color: #555;
+    padding-top: 8px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+#editItemForm input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Блок с кнопками "Отмена" и "Сохранить" */
+.modal-actions {
+    grid-column: 1 / -1; /* Занимает обе колонки */
+    display: flex;
+    gap: 10px; /* Пробел между кнопками */
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Кнопка "Сохранить" (главная) */
+.modal-actions button[type="submit"] {
+    background-image: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Наш градиент */
+    color: white;
+    border: none;
+}
+.modal-actions button[type="submit"]:hover {
+    opacity: 0.8;
+}
+
+/* Кнопка "Отмена" (второстепенная) */
+.modal-actions button#btnCancelEdit {
+    background-color: #ecf0f1; /* Светло-серая */
+    color: #333;
+    border: none;
+}
+.modal-actions button#btnCancelEdit:hover {
+    background-color: #dfe6e9;
+}
+
+/*
+ * ===============================================================
+ * ШАГ 19: СТИЛИ ДЛЯ ПАНЕЛИ УПРАВЛЕНИЯ
+ * ===============================================================
+ */
+
+.controls-panel {
+    display: flex; /* Выстраиваем элементы в ряд */
+    flex-wrap: wrap; /* Позволяем "переноситься" на новую строку на мобильных */
+    gap: 16px; /* Пробелы между элементами */
+    padding: 20px; /* Отступы, как у .items-grid */
+    margin: 0 20px; /* Выравниваем с карточкой формы */
+    background-color: #ffffff; /* Белый фон */
+    border-radius: 12px; /* Скругляем */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Легкая тень */
+    margin-bottom: 24px; /* Отступ снизу, до сетки карточек */
+}
+
+/* Стилизуем поле "Поиск" */
+.controls-panel input[type="text"] {
+    flex: 2; /* Поле "Поиск" будет расти (занимать 2 "доли") */
+    min-width: 200px; /* Минимальная ширина */
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/* Стилизуем "выпадающий список" (Сортировка) */
+.controls-panel select {
+    flex: 1; /* Занимает 1 "долю" */
+    min-width: 180px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff; /* Белый фон */
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Стилизуем кнопку "Показать" */
+.controls-panel button {
+    flex: 1; /* Занимает 1 "долю" */
+    min-width: 180px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* Пастельный оранжево-желтый градиент */
+    background-image: linear-gradient(to right, #ff8383, #8ad6fc);
+    color: #f3f3f3;
+}
+
+.controls-panel button:hover {
+    opacity: 0.8;
+}
+
+/* Стиль для кнопки "Показать", когда она "нажата" */
+.controls-panel button.active {
+    /* Меняем градиент на "тревожный" (пастельный красный) */
+    background-image: linear-gradient(to right, #ff9a9e, #fecfef);
+    color: #333;
+}
+
+/*
+ * ===============================================================
+ * ШАГ 21: СТИЛИ ДЛЯ РЕЖИМА "НАКЛАДНОЙ"
+ * ===============================================================
+ */
+
+/* Новая кнопка в "Панели Управления" */
+#btnToggleWaybillMode {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* Главный акцентный градиент (как у "Добавить товар") */
+    background-image: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    color: white;
+}
+
+/* Стиль для кнопки, когда "режим" ВКЛЮЧЕН */
+#btnToggleWaybillMode.active {
+    background-image: linear-gradient(to right, #ff9a9e, #fecfef);
+    color: #333;
+}
+
+/* Стиль для "выбранной" карточки (когда "режим" включен) */
+.item-card.selected {
+    /* Яркая "рамка" */
+    box-shadow: 0 0 0 4px #a1c4fd;
+    transform: scale(1.02); /* Чуть-чуть увеличить */
+}
+
+/* Стили для "Окна Накладной" */
+#waybillItemsList {
+    margin: 20px 0;
+    max-height: 300px; /* Ограничиваем высоту */
+    overflow-y: auto; /* Добавляем прокрутку, если много товаров */
+}
+
+/* Строка одного товара в "Накладной" */
+.waybill-item {
+    display: flex;
+    justify-content: space-between; /* "Название" слева, "Цена" - справа */
+    padding: 12px 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.waybill-item .price {
+    font-weight: bold;
+}
+
+/* Блок "Итого" */
+.waybill-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px solid #333;
+}
+
+/*
+ * ===============================================================
+ * ШАГ 24: МОБИЛЬНАЯ АДАПТИВНОСТЬ (ДЛЯ ФОРМ)
+ * ===============================================================
+ */
+
+/* Это "магическое" правило: "Применить, если экран 600px или уже" */
+@media (max-width: 600px) {
+
+    /* 1. Делаем обе наши формы 1-колоночными */
+    #addItemForm,
+    #editItemForm {
+        /* Вместо "1fr 2fr", делаем "1fr" (одна колонка) */
+        grid-template-columns: 1fr;
+    }
+
+    /* 2. "Подписям" (label) в формах... */
+    #addItemForm label,
+    #editItemForm label {
+        /* ...больше не нужно выравниваться "вправо" */
+        text-align: left;
+        padding-right: 0;
+        padding-top: 0; /* Убираем лишний отступ */
+    }
+
+    /* 3. Делаем "блок" с кнопками в модальном окне
+          (Отмена/Сохранить) тоже 1-колоночным */
+    .modal-actions {
+        flex-direction: column;
+    }
+}
